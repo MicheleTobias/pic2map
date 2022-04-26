@@ -391,14 +391,17 @@ class Pic2Map(object):
         if self.cTool != None: 
             currentLayer = self.iface.activeLayer()   
             if currentLayer.type() == 0 and currentLayer.isEditable() and currentLayer.geometryType() < 3:
-                if self.cTool.isEditTool():
+                #if self.cTool.isEditTool():
+                if self.cTool.toolName()=='Add feature':
                     if self.iface.actionAddFeature().isEnabled():
                         u,v = self.WorldToPixelOfCanvasCoordinates(x,y)
                         p = QPoint()
                         p.setX(u)
                         p.setY(v)
-                        event = QMouseEvent(QEvent.MouseButtonRelease,p,button,button,Qt.NoModifier)
-                        event2 = QgsMapMouseEvent(self.canvas, event)####
+                        #event = QMouseEvent(QEvent.MouseButtonRelease,p,button,button,Qt.NoModifier)
+                        #event = QMouseEvent(QEvent.MouseButtonRelease,p,button,button,Qt.NoModifier)
+                        #event2 = QgsMapMouseEvent(self.canvas, event)####
+                        event2 = QgsMapMouseEvent(self.canvas, QEvent.MouseButtonRelease, p, button, button, Qt.NoModifier)
                         self.cTool.canvasReleaseEvent(event2)
                     # check if the edited layer is a point layer
                     if currentLayer.geometryType() == 0:
